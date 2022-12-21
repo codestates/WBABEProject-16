@@ -1,0 +1,132 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "contact": {}
+    },
+    "paths": {
+        "/acc/v01/Join": {
+            "post": {
+                "description": "api test를 위한 기능.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "join a person , return objectID",
+                "parameters": [
+                    {
+                        "description": "person Info",
+                        "name": "model.Person",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.Person"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/acc/v01/updatePerson": {
+            "put": {
+                "description": "api test를 위한 기능.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "update person age , return update_count",
+                "parameters": [
+                    {
+                        "description": "person Info",
+                        "name": "model.Person",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.Person"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/common/personByName": {
+            "post": {
+                "description": "api test를 위한 기능.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "get person Info, return peronInfo by json.",
+                "parameters": [
+                    {
+                        "description": "user name",
+                        "name": "nameRequestBody",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controller.nameRequestBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/controller.personRequestBody"
+                        }
+                    }
+                }
+            }
+        },
+        "/health": {
+            "get": {
+                "description": "health check",
+                "summary": "health check",
+                "responses": {}
+            }
+        }
+    },
+    "definitions": {
+        "controller.nameRequestBody": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "controller.personRequestBody": {
+            "type": "object",
+            "properties": {
+                "age": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "pnum": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.Person": {
+            "type": "object",
+            "properties": {
+                "age": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "pnum": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

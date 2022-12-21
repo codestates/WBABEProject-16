@@ -1,0 +1,85 @@
+definitions:
+  controller.nameRequestBody:
+    properties:
+      name:
+        type: string
+    type: object
+  controller.personRequestBody:
+    properties:
+      age:
+        type: string
+      name:
+        type: string
+      pnum:
+        type: string
+    type: object
+  model.Person:
+    properties:
+      age:
+        type: string
+      name:
+        type: string
+      pnum:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /acc/v01/Join:
+    post:
+      consumes:
+      - application/json
+      description: api test를 위한 기능.
+      parameters:
+      - description: person Info
+        in: body
+        name: model.Person
+        required: true
+        schema:
+          $ref: '#/definitions/model.Person'
+      produces:
+      - application/json
+      responses: {}
+      summary: join a person , return objectID
+  /acc/v01/updatePerson:
+    put:
+      consumes:
+      - application/json
+      description: api test를 위한 기능.
+      parameters:
+      - description: person Info
+        in: body
+        name: model.Person
+        required: true
+        schema:
+          $ref: '#/definitions/model.Person'
+      produces:
+      - application/json
+      responses: {}
+      summary: update person age , return update_count
+  /common/personByName:
+    post:
+      consumes:
+      - application/json
+      description: api test를 위한 기능.
+      parameters:
+      - description: user name
+        in: body
+        name: nameRequestBody
+        required: true
+        schema:
+          $ref: '#/definitions/controller.nameRequestBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller.personRequestBody'
+      summary: get person Info, return peronInfo by json.
+  /health:
+    get:
+      description: health check
+      responses: {}
+      summary: health check
+swagger: "2.0"

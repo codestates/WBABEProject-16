@@ -1,0 +1,17 @@
+{"level":"DEBUG","time":"2022-12-21T21:03:44.385+0900","caller":"logger/logger.go:51","msg":"debug","-":"ready server.... "}
+{"level":"WARN","time":"2022-12-21T21:05:49.319+0900","caller":"logger/logger.go:63","msg":"warn","-":""}
+{"level":"DEBUG","time":"2022-12-21T21:11:07.647+0900","caller":"logger/logger.go:51","msg":"debug","-":"ready server.... "}
+{"level":"WARN","time":"2022-12-21T21:13:02.525+0900","caller":"logger/logger.go:63","msg":"warn","-":""}
+{"level":"DEBUG","time":"2022-12-21T21:15:19.713+0900","caller":"logger/logger.go:51","msg":"debug","-":"ready server.... "}
+{"level":"WARN","time":"2022-12-21T21:21:29.728+0900","caller":"logger/logger.go:63","msg":"warn","-":""}
+{"level":"DEBUG","time":"2022-12-21T21:21:40.089+0900","caller":"logger/logger.go:51","msg":"debug","-":"ready server.... "}
+{"level":"WARN","time":"2022-12-21T21:35:34.527+0900","caller":"logger/logger.go:63","msg":"warn","-":""}
+{"level":"DEBUG","time":"2022-12-21T21:35:43.199+0900","caller":"logger/logger.go:51","msg":"debug","-":"ready server.... "}
+{"level":"WARN","time":"2022-12-21T21:40:41.103+0900","caller":"logger/logger.go:63","msg":"warn","-":""}
+{"level":"INFO","time":"2022-12-21T21:40:46.105+0900","caller":"logger/logger.go:57","msg":"info","-":""}
+{"level":"INFO","time":"2022-12-21T21:40:46.105+0900","caller":"logger/logger.go:57","msg":"info","-":""}
+{"level":"ERROR","time":"2022-12-21T21:40:46.105+0900","caller":"logger/logger.go:69","msg":"error","-":""}
+{"level":"DEBUG","time":"2022-12-21T21:44:25.204+0900","caller":"logger/logger.go:51","msg":"debug","-":"ready server.... "}
+{"level":"INFO","time":"2022-12-21T21:44:29.214+0900","caller":"logger/logger.go:102","msg":"/health","status":200,"method":"GET","path":"/health","query":"","ip":"::1","user-agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36","errors":"","cost":0.000023364}
+{"level":"INFO","time":"2022-12-21T21:44:37.333+0900","caller":"logger/logger.go:102","msg":"/common/personByName","status":200,"method":"POST","path":"/common/personByName","query":"","ip":"::1","user-agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36","errors":"","cost":0.003530495}
+{"level":"WARN","time":"2022-12-21T21:49:02.630+0900","caller":"logger/logger.go:63","msg":"warn","-":""}
