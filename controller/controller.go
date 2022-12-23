@@ -2,6 +2,7 @@ package controller
 
 import (
 	"codestates_lecture/WBABEProject-16/model"
+	"errors"
 	"fmt"
 	"net/http"
 
@@ -12,134 +13,86 @@ import (
 type Controller struct {
 	mongoDb *model.Model
 }
-
+type DeleteRequestBody struct{
+	Name string `json:name "binding":"required"`
+}
 
 func NewController(mongo *model.Model) (*Controller, error){
 	r := &Controller{mongoDb: mongo}
 	return r, nil
 }
 
-type nameRequestBody struct {
-	Name string
-}
 
-type pnumRequestBody struct {
-	Pnum string
-}
-
-type updateRequestBody struct {
-	Name nameRequestBody
-	Pnum pnumRequestBody
-}
-
-
-
-type personRequestBody struct{
-	Name string `bson:string`
-	Age string  `bson:string`
-	Pnum string  `bson:string`
-}
-
-
-
-// PostOK godoc
-// @Summary get person Info, return peronInfo by json.
-// @Description api test를 위한 기능.
-// @name personByName
+// Post
+// @Summary add a pizza in category
+// @Description 피자종류를 추가하는 api
 // @Accept  json
 // @Produce  json
-// @Param nameRequestBody body nameRequestBody true "user name"
-// @Router /common/personByName [post]s
-// @Success 200 {object} personRequestBody
-func (ct *Controller) GetPersonByName(c *gin.Context){
-	
-    var requestBody nameRequestBody;
-	if err := c.BindJSON(&requestBody); err != nil {
-		fmt.Println("error")
-	}
-	fmt.Println(requestBody.Name)
-	result, err := ct.mongoDb.GetPersonByName(requestBody.Name)
-	if err != nil {
-		fmt.Println("error 발생")
-	}
-	fmt.Println(result)
-	c.JSON(http.StatusOK, gin.H{"data":result})
-}
-
-func (ct *Controller) GetPersonByPnum(c *gin.Context){
-	
-    var requestBody pnumRequestBody;
-	if err := c.BindJSON(&requestBody); err != nil {
-		fmt.Println("error")
-	}
-	fmt.Println(requestBody.Pnum)
-	result, err := ct.mongoDb.GetPersonByPnum(requestBody.Pnum)
-	if err != nil {
-		fmt.Println("error 발생")
-	}
-	fmt.Println(result)
-	c.JSON(http.StatusOK, gin.H{"data":result})
+// @Param model.PizzaCategory body model.PizzaCategory true "PizzaCategory Info"
+// @Router /admin/category [post]s
+// @Success 200 {object} model.PizzaCategory
+func (ctl *Controller) AddCategory(c *gin.Context){
+   var requestBody model.PizzaCategory
+   if err := c.ShouldBind(&requestBody); err != nil {
+	   fmt.Println(err)
+	   c.JSON(http.StatusBadRequest, gin.H{"result":false})
+	   return
+   }
+   ctl.mongoDb.AddCategory(requestBody)
+   c.JSON(http.StatusOK, gin.H{"result":true})
 }
 
 
-// PostOK godoc
-// @Summary join a person , return objectID
-// @Description api test를 위한 기능.
-// @name Join
+
+// Post
+// @Summary update a pizza in category
+// @Description 피자정보를 update하는 api
 // @Accept  json
 // @Produce  json
-// @Param model.Person body model.Person true "person Info"
-// @Router /acc/v01/Join [post]s
-func (ct *Controller) JoinPerson(c *gin.Context){
-	var requestBody personRequestBody
-	if err := c.BindJSON(&requestBody); err != nil {
-		fmt.Println("err")
+// @Param model.PizzaCategory body model.PizzaCategory true "PizzaCategory Info"
+// @Router /admin/category [put]s
+// @Success 200 {object} model.PizzaCategory
+func (ctl *Controller) UpdateCategory(c *gin.Context){
+	var requestBody model.PizzaCategory
+	if err := c.ShouldBind(&requestBody); err != nil {
+		fmt.Println(err)
+		c.JSON(http.StatusBadRequest, gin.H{"result":false})
+		return
 	}
-	result, err := ct.mongoDb.JoinPerson(model.Person(requestBody))
-	c.JSON(http.StatusOK, gin.H{"data":"success"})
-	if err != nil {
-		fmt.Println("error 발생")
+	result, err := ctl.mongoDb.UpdateCategory(requestBody)
+	if err != nil{
+		fmt.Println(err)
+		c.JSON(http.StatusBadRequest, gin.H{"result":errors.New("error")})
+		return
 	}
-	c.JSON(http.StatusOK, gin.H{"objectsId":result})
-}
+	c.JSON(http.StatusOK, gin.H{"result":result})
+ }
+ 
 
-
-// PostOK godoc
-// @Summary update person age , return update_count 
-// @Description api test를 위한 기능.
-// @name updatePerson
+ // Delete
+// @Summary delete a pizza in category
+// @Description 피자정보를 update하는 api
 // @Accept  json
 // @Produce  json
-// @Param model.Person body model.Person true "person Info"
-// @Router /acc/v01/updatePerson [put]s
-func (ct *Controller) UpdatePerson(c *gin.Context){
-	var requestBody model.Person
-	if err := c.BindJSON(&requestBody); err != nil {
-		fmt.Println("err")
+// @Param DeleteRequestBody body DeleteRequestBody true "delete"
+// @Router /admin/category [delete]s
+func (ctl *Controller) DeleteCategory(c *gin.Context){
+
+	var requestBody DeleteRequestBody
+	if err := c.ShouldBind(&requestBody); err != nil {
+		fmt.Println(err)
+		c.JSON(http.StatusBadRequest, gin.H{"result":false})
+		return
 	}
-	result, err := ct.mongoDb.UpdatePerson(requestBody)
-	if err != nil {
-		fmt.Println("error")
+	fmt.Print(requestBody)
+	result, err := ctl.mongoDb.DeleteByName(requestBody.Name)
+	if err != nil{
+		c.JSON(http.StatusBadRequest, gin.H{"result":errors.New("error")})
+		return
 	}
-
-	c.JSON(http.StatusOK, gin.H{"update_count":result})
-}
-
-func (ct *Controller) DeletePerson(c *gin.Context){
-	var requestBody model.Person
-	if err := c.BindJSON(&requestBody); err != nil {
-		fmt.Println("err")
-	}
-	result, err := ct.mongoDb.DeletePerson(requestBody)
-	if err != nil {
-		fmt.Println("error")
-	}
-
-	c.JSON(http.StatusOK, gin.H{"delete_count":result})
-}
-
-
-
+	c.JSON(http.StatusOK, gin.H{"result":result})
+ }
+ 
 
 
 // GetOk godoc

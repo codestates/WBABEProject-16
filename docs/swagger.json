@@ -4,72 +4,24 @@
         "contact": {}
     },
     "paths": {
-        "/acc/v01/Join": {
-            "post": {
-                "description": "api test를 위한 기능.",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "summary": "join a person , return objectID",
-                "parameters": [
-                    {
-                        "description": "person Info",
-                        "name": "model.Person",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/model.Person"
-                        }
-                    }
-                ],
-                "responses": {}
-            }
-        },
-        "/acc/v01/updatePerson": {
+        "/admin/category": {
             "put": {
-                "description": "api test를 위한 기능.",
+                "description": "피자정보를 update하는 api",
                 "consumes": [
                     "application/json"
                 ],
                 "produces": [
                     "application/json"
                 ],
-                "summary": "update person age , return update_count",
+                "summary": "update a pizza in category",
                 "parameters": [
                     {
-                        "description": "person Info",
-                        "name": "model.Person",
+                        "description": "PizzaCategory Info",
+                        "name": "model.PizzaCategory",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/model.Person"
-                        }
-                    }
-                ],
-                "responses": {}
-            }
-        },
-        "/common/personByName": {
-            "post": {
-                "description": "api test를 위한 기능.",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "summary": "get person Info, return peronInfo by json.",
-                "parameters": [
-                    {
-                        "description": "user name",
-                        "name": "nameRequestBody",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/controller.nameRequestBody"
+                            "$ref": "#/definitions/model.PizzaCategory"
                         }
                     }
                 ],
@@ -77,10 +29,61 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/controller.personRequestBody"
+                            "$ref": "#/definitions/model.PizzaCategory"
                         }
                     }
                 }
+            },
+            "post": {
+                "description": "피자종류를 추가하는 api",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "add a pizza in category",
+                "parameters": [
+                    {
+                        "description": "PizzaCategory Info",
+                        "name": "model.PizzaCategory",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.PizzaCategory"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.PizzaCategory"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "피자정보를 update하는 api",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "delete a pizza in category",
+                "parameters": [
+                    {
+                        "description": "delete",
+                        "name": "DeleteRequestBody",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controller.DeleteRequestBody"
+                        }
+                    }
+                ],
+                "responses": {}
             }
         },
         "/health": {
@@ -92,39 +95,29 @@
         }
     },
     "definitions": {
-        "controller.nameRequestBody": {
-            "type": "object",
-            "properties": {
-                "name": {
-                    "type": "string"
-                }
-            }
+        "controller.DeleteRequestBody": {
+            "type": "object"
         },
-        "controller.personRequestBody": {
+        "model.PizzaCategory": {
             "type": "object",
             "properties": {
-                "age": {
+                "des": {
                     "type": "string"
+                },
+                "limit_Order": {
+                    "type": "integer"
+                },
+                "lsizePrice": {
+                    "type": "integer"
+                },
+                "msizePrice": {
+                    "type": "integer"
                 },
                 "name": {
                     "type": "string"
                 },
-                "pnum": {
-                    "type": "string"
-                }
-            }
-        },
-        "model.Person": {
-            "type": "object",
-            "properties": {
-                "age": {
-                    "type": "string"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "pnum": {
-                    "type": "string"
+                "order_status": {
+                    "type": "boolean"
                 }
             }
         }

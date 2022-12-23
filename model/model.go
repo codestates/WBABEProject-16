@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"time"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -11,15 +12,21 @@ import (
 )
 type Model struct {
 	client *mongo.Client
-	collectionPersons *mongo.Collection
+	colPizzaCategory *mongo.Collection
 }
 
 
-type Person struct{
-	Name string `bson:string`
-	Age string  `bson:string`
-	Pnum string  `bson:string`
+type PizzaCategory struct {
+	Name string `json:name binding:"required"`
+	Des string `json:des binding:"required"`
+	MsizePrice int `json:msizePrice binding:"required"`
+	LsizePrice int `json:lsizePrice binding:"required"`
+    Order_status bool `json:order_status binding:"required"`
+	Limit_Order int `json:limit_order binding:"required"`
+	Updated_At time.Time `json:updated_at`
+	Deleted_At time.Time `json:deleted_at`
 }
+
 
 
 func NewModel() (*Model, error){
@@ -31,72 +38,109 @@ func NewModel() (*Model, error){
 	}else if err := r.client.Ping(context.Background(), nil); err != nil {
          return nil, err
 	} else {
-		db := r.client.Database("go-ready")
-		r.collectionPersons = db.Collection("tPerson")
+		db := r.client.Database("wba_project")
+		r.colPizzaCategory = db.Collection("pizza_category")
 	}
   return r, nil
 }
 
-func (m *Model) GetPersonByName(name string) (Person, error){
-   filter := bson.M{"name":name}
-   var result Person
-   err := m.collectionPersons.FindOne(context.TODO(), filter).Decode(&result)
-   if err == mongo.ErrNoDocuments {
-	   fmt.Printf("No document was found with the name %s\n", name)
-	   return Person{}, errors.New("error")
-   } else if err != nil {
-	   panic(err)
-   }
 
-  return result, nil
-  
+func (m *Model) AddCategory(category PizzaCategory) (bool,error) {
+
+    // JData, err := json.Marshal(category)
+	// if err != nil {
+	// 	return false, errors.New("error")
+	// }
+
+	doc := bson.M{
+		"name":category.Name,
+		"des":category.Des,
+		"msizeprice":category.MsizePrice,
+		"lsizeprice":category.LsizePrice,
+		"order_status":category.Order_status,
+		"limit_order": category.Limit_Order,
+		"updated_at" : time.Now(),
+		"deleted_at" : nil,
+	}
+   result, err := m.colPizzaCategory.InsertOne(context.TODO(), doc)
+   if err != nil {
+	return false, errors.New("error")
+   }
+   fmt.Println(result)
+	return true,nil
 }
 
 
-func (m *Model) GetPersonByPnum(Pnum string) (Person, error){
-	filter := bson.M{"pnum":Pnum}
-	var result Person
-	err := m.collectionPersons.FindOne(context.TODO(), filter).Decode(&result)
-	if err == mongo.ErrNoDocuments {
-		fmt.Printf("No document was found with the name %s\n", Pnum)
-		return Person{}, errors.New("error")
-	} else if err != nil {
-		panic(err)
+func (m *Model) UpdateCategory(category PizzaCategory) (bool,error) {
+	fmt.Print("durl1")
+	_, findErr := m.findByName(category.Name)
+	if findErr != nil {
+		return false, errors.New("error")
 	}
- 
-   return result, nil
-   
- }
-
- func (m *Model) JoinPerson(personInfo Person) (any,error){
-	 info := bson.M{"name":personInfo.Name, "age":personInfo.Age, "pnum":personInfo.Pnum}
-	 result, err := m.collectionPersons.InsertOne(context.TODO(), info)
-	 if err != nil {
-		 return "",errors.New("error")
-	 }
-	 return result.InsertedID, nil
- }
-
- func (m *Model) UpdatePerson(personInfo Person) (any, error){
-	 filter := bson.M{"name":personInfo.Name}
-	 update := bson.D{{"$set", bson.D{{"age",personInfo.Age}}}}
-	 result, err := m.collectionPersons.UpdateOne(context.TODO(), filter, update)
-	  if err != nil {
-		panic(err)
-	}
-	return result.ModifiedCount, nil
 	
- }
+    filter := bson.M{"name":category.Name}
+	update := bson.M{
+		"$set": bson.M{
+		"des":category.Des,
+		"msizeprice":category.MsizePrice,
+		"lsizeprice":category.LsizePrice,
+		"order_status":category.Order_status,
+		"limit_order": category.Limit_Order,
+		"updated_at" : time.Now(),
+		"deleted_at" : nil,
+		},
+	}
+	result, err := m.colPizzaCategory.UpdateOne(context.TODO(), filter, update)
+	if err != nil {
+		fmt.Println(err)
+		panic(err)
+	}
+	if result.ModifiedCount == 1 {
+		return true, nil
+	}
+	return false,errors.New("error")
+}
+
+func (m *Model) findByName(name string) (PizzaCategory,error){
+	filter := bson.M{"name":name}
+	
+	var result PizzaCategory
+	err := m.colPizzaCategory.FindOne(context.TODO(), filter).Decode(&result)
+	if err == mongo.ErrNoDocuments {
+		fmt.Printf("No document was found with the name %s\n", name)
+		return PizzaCategory{}, errors.New("error")
+	} else if err != nil {
+		fmt.Println(err)
+		panic(err)
+	}	
+	return result, nil
+}
 
 
-
- func (m *Model) DeletePerson(personInfo Person) (any, error){
-	filter := bson.M{"name":personInfo.Name}
-
-	result, err := m.collectionPersons.DeleteOne(context.TODO(), filter)
-	 if err != nil {
-	   panic(err)
-   }
-   return result.DeletedCount, nil
-   
+func (m *Model) DeleteByName(name string) (bool, error){
+	findResult, findErr := m.findByName(name)
+	if findErr != nil {
+		return false, errors.New("error")
+	}
+	filter := bson.M{"name":name}
+	update := bson.M{
+		"$set": bson.M{
+		"des":findResult.Des,
+		"msizeprice":findResult.MsizePrice,
+		"lsizeprice":findResult.LsizePrice,
+		"order_status":findResult.Order_status,
+		"limit_order": findResult.Limit_Order,
+		"updated_at" : findResult.Updated_At,
+		"deleted_at" : time.Now(),
+		},
+	}
+	result, err := m.colPizzaCategory.UpdateOne(context.TODO(), filter, update)
+	if err != nil {
+		fmt.Println(err)
+		panic(err)
+	}
+	if result.ModifiedCount == 1 {
+		return true, nil
+	}
+	return false,errors.New("error")
 }

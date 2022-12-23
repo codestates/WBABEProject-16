@@ -48,7 +48,7 @@ func CORS() gin.HandlerFunc {
 func (r *Router)Idx() *gin.Engine {
 	
 	docs.SwaggerInfo.Host = "localhost:8080" //swagger 정보 등록
-	docs.SwaggerInfo.Title= "hello my api"
+	docs.SwaggerInfo.Title= "pizza API"
     server := gin.New()
 	server.Use(logger.GinLogger())
 	server.Use(logger.GinRecovery(true))
@@ -57,17 +57,11 @@ func (r *Router)Idx() *gin.Engine {
 	server.GET("/swagger/:any", ginSwg.WrapHandler(swgFiles.Handler,url)) 
 
 	server.GET("health", r.controller.HealthCheck)
-	account := server.Group("common")
+	admin := server.Group("admin")
 	{
-	
-		account.POST("/personByName",liteAuth(),r.controller.GetPersonByName)	
-		account.POST("/personByPnum",liteAuth(),r.controller.GetPersonByPnum)	
-		account.POST("/join", liteAuth(),r.controller.JoinPerson)
-        account.PUT("/updatePerson", liteAuth(), r.controller.UpdatePerson)
-		account.DELETE("/deletePerson",liteAuth(), r.controller.DeletePerson)
-
-		// account.GET("/getPerson", p.ct.GetPerson)	// controller 패키지의 실제 처리 함수
-		// account.POST("/updatePerson",p.ct.UpdatePerson)
+	  admin.POST("/category",r.controller.AddCategory)
+	  admin.PUT("/category",r.controller.UpdateCategory)
+	  admin.DELETE("/category",r.controller.DeleteCategory)
 	}
 
 	return server
