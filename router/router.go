@@ -3,9 +3,10 @@ package router
 import (
 	"fmt"
 
-	controller "codestates_lecture/WBABEProject-16/controller"
+	adminController "codestates_lecture/WBABEProject-16/admincontroller"
 	"codestates_lecture/WBABEProject-16/docs"
 	"codestates_lecture/WBABEProject-16/logger"
+	orderController "codestates_lecture/WBABEProject-16/ordercontroller"
 
 	"github.com/gin-gonic/gin"
 	swgFiles "github.com/swaggo/files"
@@ -14,10 +15,11 @@ import (
 
 
 type Router struct {
-	controller *controller.Controller
+	adminController *adminController.Controller
+	orderController *orderController.Controller
 }
-func NewRouter(ctl *controller.Controller) (*Router, error){
-	r := &Router{controller: ctl}
+func NewRouter(adminCtl *adminController.Controller,orderCtl *orderController.Controller) (*Router, error){
+	r := &Router{adminController: adminCtl, orderController: orderCtl}
 	return r, nil
 }
 func liteAuth() gin.HandlerFunc {
@@ -56,13 +58,17 @@ func (r *Router)Idx() *gin.Engine {
 	url := ginSwg.URL("http://localhost:8080/swagger/doc.json") // The url pointing to API definitionv
 	server.GET("/swagger/:any", ginSwg.WrapHandler(swgFiles.Handler,url)) 
 
-	server.GET("health", r.controller.HealthCheck)
+	server.GET("health", r.adminController.HealthCheck)
 	admin := server.Group("admin")
 	{
-	  admin.POST("/category",r.controller.AddCategory)
-	  admin.PUT("/category",r.controller.UpdateCategory)
-	  admin.DELETE("/category",r.controller.DeleteCategory)
+	  admin.POST("/category",r.adminController.AddCategory)
+	  admin.PUT("/category",r.adminController.UpdateCategory)
+	  admin.DELETE("/category",r.adminController.DeleteCategory)
+	  admin.POST("/order/update", r.adminController.UpdateOrderStatus)
+	} 
+	order := server.Group("pizza")
+	{
+	   order.POST("/order", r.orderController.OrderPizza)
 	}
-
 	return server
  }

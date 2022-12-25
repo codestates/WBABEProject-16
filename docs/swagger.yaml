@@ -1,20 +1,69 @@
 definitions:
   controller.DeleteRequestBody:
+    properties:
+      name:
+        type: string
+    type: object
+  controller.OrderStatusBody:
+    properties:
+      id:
+        type: string
+      status:
+        type: string
+    type: object
+  controller.PizzaOrderBody:
+    properties:
+      orderInfo:
+        $ref: '#/definitions/model.OrderInfo'
+      personInfo:
+        $ref: '#/definitions/model.OrderPersonInfo'
+    type: object
+  model.OrderInfo:
+    properties:
+      _id:
+        type: string
+      amount:
+        type: integer
+      pizza_id:
+        type: string
+      size:
+        type: string
+      status:
+        type: string
+    type: object
+  model.OrderPersonInfo:
+    properties:
+      _id:
+        type: string
+      address:
+        type: string
+      name:
+        type: string
+      phone:
+        type: string
+      pizzaId:
+        type: string
     type: object
   model.PizzaCategory:
     properties:
+      _id:
+        type: string
+      deleted_At:
+        type: string
       des:
         type: string
+      l:
+        type: integer
       limit_Order:
         type: integer
-      lsizePrice:
-        type: integer
-      msizePrice:
+      m:
         type: integer
       name:
         type: string
       order_status:
         type: boolean
+      updated_At:
+        type: string
     type: object
 info:
   contact: {}
@@ -73,9 +122,41 @@ paths:
           schema:
             $ref: '#/definitions/model.PizzaCategory'
       summary: update a pizza in category
+  /admin/order/update:
+    post:
+      consumes:
+      - application/json
+      description: 피자주문정보에서 주문접수, 조리, 배달완료 등 상태를 update하는 API
+      parameters:
+      - description: update a status in order
+        in: body
+        name: OrderStatusBody
+        required: true
+        schema:
+          $ref: '#/definitions/controller.OrderStatusBody'
+      produces:
+      - application/json
+      responses: {}
+      summary: update a status in order
   /health:
     get:
       description: health check
       responses: {}
       summary: health check
+  /pizza/order:
+    post:
+      consumes:
+      - application/json
+      description: 피자를 주문하는 API
+      parameters:
+      - description: PizzaOrderBody Info
+        in: body
+        name: PizzaOrderBody
+        required: true
+        schema:
+          $ref: '#/definitions/controller.PizzaOrderBody'
+      produces:
+      - application/json
+      responses: {}
+      summary: order a pizza
 swagger: "2.0"

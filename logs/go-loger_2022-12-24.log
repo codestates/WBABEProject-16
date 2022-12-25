@@ -1,0 +1,69 @@
+{"level":"DEBUG","time":"2022-12-24T11:33:37.309+0900","caller":"logger/logger.go:51","msg":"debug","-":"ready server.... "}
+{"level":"WARN","time":"2022-12-24T11:33:57.315+0900","caller":"logger/logger.go:63","msg":"warn","-":""}
+{"level":"INFO","time":"2022-12-24T11:34:02.316+0900","caller":"logger/logger.go:57","msg":"info","-":""}
+{"level":"INFO","time":"2022-12-24T11:34:02.316+0900","caller":"logger/logger.go:57","msg":"info","-":""}
+{"level":"ERROR","time":"2022-12-24T11:34:02.316+0900","caller":"logger/logger.go:69","msg":"error","-":""}
+{"level":"DEBUG","time":"2022-12-24T11:41:50.267+0900","caller":"logger/logger.go:51","msg":"debug","-":"ready server.... "}
+{"level":"INFO","time":"2022-12-24T11:41:56.986+0900","caller":"logger/logger.go:102","msg":"/admin/category","status":200,"method":"POST","path":"/admin/category","query":"","ip":"::1","user-agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36","errors":"","cost":0.006643128}
+{"level":"INFO","time":"2022-12-24T11:42:17.401+0900","caller":"logger/logger.go:102","msg":"/admin/category","status":200,"method":"POST","path":"/admin/category","query":"","ip":"::1","user-agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36","errors":"","cost":0.001707192}
+{"level":"WARN","time":"2022-12-24T11:43:25.557+0900","caller":"logger/logger.go:63","msg":"warn","-":""}
+{"level":"INFO","time":"2022-12-24T11:43:30.559+0900","caller":"logger/logger.go:57","msg":"info","-":""}
+{"level":"INFO","time":"2022-12-24T11:43:30.559+0900","caller":"logger/logger.go:57","msg":"info","-":""}
+{"level":"ERROR","time":"2022-12-24T11:43:30.559+0900","caller":"logger/logger.go:69","msg":"error","-":""}
+{"level":"DEBUG","time":"2022-12-24T11:43:35.483+0900","caller":"logger/logger.go:51","msg":"debug","-":"ready server.... "}
+{"level":"INFO","time":"2022-12-24T11:43:37.215+0900","caller":"logger/logger.go:102","msg":"/admin/category","status":200,"method":"POST","path":"/admin/category","query":"","ip":"::1","user-agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36","errors":"","cost":0.002339166}
+{"level":"WARN","time":"2022-12-24T11:43:58.311+0900","caller":"logger/logger.go:63","msg":"warn","-":""}
+{"level":"INFO","time":"2022-12-24T11:44:03.313+0900","caller":"logger/logger.go:57","msg":"info","-":""}
+{"level":"INFO","time":"2022-12-24T11:44:03.313+0900","caller":"logger/logger.go:57","msg":"info","-":""}
+{"level":"ERROR","time":"2022-12-24T11:44:03.313+0900","caller":"logger/logger.go:69","msg":"error","-":""}
+{"level":"DEBUG","time":"2022-12-24T11:44:06.323+0900","caller":"logger/logger.go:51","msg":"debug","-":"ready server.... "}
+{"level":"INFO","time":"2022-12-24T11:44:08.998+0900","caller":"logger/logger.go:102","msg":"/admin/category","status":200,"method":"POST","path":"/admin/category","query":"","ip":"::1","user-agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36","errors":"","cost":0.002461862}
+{"level":"INFO","time":"2022-12-24T11:46:41.325+0900","caller":"logger/logger.go:102","msg":"/admin/category","status":200,"method":"POST","path":"/admin/category","query":"","ip":"::1","user-agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36","errors":"","cost":0.003630291}
+{"level":"WARN","time":"2022-12-24T15:52:13.138+0900","caller":"logger/logger.go:63","msg":"warn","-":""}
+{"level":"INFO","time":"2022-12-24T15:52:18.139+0900","caller":"logger/logger.go:57","msg":"info","-":""}
+{"level":"INFO","time":"2022-12-24T15:52:18.139+0900","caller":"logger/logger.go:57","msg":"info","-":""}
+{"level":"ERROR","time":"2022-12-24T15:52:18.139+0900","caller":"logger/logger.go:69","msg":"error","-":""}
+{"level":"DEBUG","time":"2022-12-24T15:52:27.858+0900","caller":"logger/logger.go:51","msg":"debug","-":"ready server.... "}
+{"level":"INFO","time":"2022-12-24T15:52:38.931+0900","caller":"logger/logger.go:102","msg":"/admin/category","status":400,"method":"PUT","path":"/admin/category","query":"","ip":"::1","user-agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36","errors":"","cost":0.002672524}
+{"level":"INFO","time":"2022-12-24T15:52:48.356+0900","caller":"logger/logger.go:102","msg":"/admin/category","status":200,"method":"POST","path":"/admin/category","query":"","ip":"::1","user-agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36","errors":"","cost":0.003832378}
+{"level":"WARN","time":"2022-12-24T15:54:09.389+0900","caller":"logger/logger.go:63","msg":"warn","-":""}
+{"level":"INFO","time":"2022-12-24T15:54:14.390+0900","caller":"logger/logger.go:57","msg":"info","-":""}
+{"level":"INFO","time":"2022-12-24T15:54:14.390+0900","caller":"logger/logger.go:57","msg":"info","-":""}
+{"level":"ERROR","time":"2022-12-24T15:54:14.390+0900","caller":"logger/logger.go:69","msg":"error","-":""}
+{"level":"DEBUG","time":"2022-12-24T16:08:17.106+0900","caller":"logger/logger.go:51","msg":"debug","-":"ready server.... "}
+{"level":"INFO","time":"2022-12-24T16:08:20.482+0900","caller":"logger/logger.go:102","msg":"/admin/category","status":200,"method":"POST","path":"/admin/category","query":"","ip":"::1","user-agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36","errors":"","cost":0.005241114}
+{"level":"WARN","time":"2022-12-24T16:09:17.560+0900","caller":"logger/logger.go:63","msg":"warn","-":""}
+{"level":"INFO","time":"2022-12-24T16:09:22.561+0900","caller":"logger/logger.go:57","msg":"info","-":""}
+{"level":"INFO","time":"2022-12-24T16:09:22.561+0900","caller":"logger/logger.go:57","msg":"info","-":""}
+{"level":"ERROR","time":"2022-12-24T16:09:22.561+0900","caller":"logger/logger.go:69","msg":"error","-":""}
+{"level":"DEBUG","time":"2022-12-24T16:09:26.094+0900","caller":"logger/logger.go:51","msg":"debug","-":"ready server.... "}
+{"level":"INFO","time":"2022-12-24T16:09:27.786+0900","caller":"logger/logger.go:102","msg":"/admin/category","status":200,"method":"POST","path":"/admin/category","query":"","ip":"::1","user-agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36","errors":"","cost":0.004140763}
+{"level":"WARN","time":"2022-12-24T16:10:02.149+0900","caller":"logger/logger.go:63","msg":"warn","-":""}
+{"level":"INFO","time":"2022-12-24T16:10:07.151+0900","caller":"logger/logger.go:57","msg":"info","-":""}
+{"level":"INFO","time":"2022-12-24T16:10:07.151+0900","caller":"logger/logger.go:57","msg":"info","-":""}
+{"level":"ERROR","time":"2022-12-24T16:10:07.151+0900","caller":"logger/logger.go:69","msg":"error","-":""}
+{"level":"DEBUG","time":"2022-12-24T16:32:32.181+0900","caller":"logger/logger.go:51","msg":"debug","-":"ready server.... "}
+{"level":"INFO","time":"2022-12-24T16:32:34.551+0900","caller":"logger/logger.go:102","msg":"/swagger/index.html","status":200,"method":"GET","path":"/swagger/index.html","query":"","ip":"::1","user-agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36","errors":"","cost":0.000534879}
+{"level":"INFO","time":"2022-12-24T16:32:34.662+0900","caller":"logger/logger.go:102","msg":"/swagger/swagger-ui.css","status":200,"method":"GET","path":"/swagger/swagger-ui.css","query":"","ip":"::1","user-agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36","errors":"","cost":0.000290592}
+{"level":"INFO","time":"2022-12-24T16:32:34.671+0900","caller":"logger/logger.go:102","msg":"/swagger/swagger-ui-bundle.js","status":200,"method":"GET","path":"/swagger/swagger-ui-bundle.js","query":"","ip":"::1","user-agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36","errors":"","cost":0.001146813}
+{"level":"INFO","time":"2022-12-24T16:32:34.671+0900","caller":"logger/logger.go:102","msg":"/swagger/swagger-ui-standalone-preset.js","status":200,"method":"GET","path":"/swagger/swagger-ui-standalone-preset.js","query":"","ip":"::1","user-agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36","errors":"","cost":0.000253645}
+{"level":"INFO","time":"2022-12-24T16:32:36.356+0900","caller":"logger/logger.go:102","msg":"/swagger/favicon-32x32.png","status":200,"method":"GET","path":"/swagger/favicon-32x32.png","query":"","ip":"::1","user-agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36","errors":"","cost":0.000032125}
+{"level":"INFO","time":"2022-12-24T16:32:36.442+0900","caller":"logger/logger.go:102","msg":"/swagger/doc.json","status":200,"method":"GET","path":"/swagger/doc.json","query":"","ip":"::1","user-agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36","errors":"","cost":0.000185415}
+{"level":"INFO","time":"2022-12-24T16:32:36.453+0900","caller":"logger/logger.go:102","msg":"/swagger/favicon-32x32.png","status":304,"method":"GET","path":"/swagger/favicon-32x32.png","query":"","ip":"::1","user-agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36","errors":"","cost":0.000024309}
+{"level":"INFO","time":"2022-12-24T16:32:59.956+0900","caller":"logger/logger.go:102","msg":"/pizza/order","status":200,"method":"POST","path":"/pizza/order","query":"","ip":"::1","user-agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36","errors":"","cost":0.000266305}
+{"level":"WARN","time":"2022-12-24T16:34:20.742+0900","caller":"logger/logger.go:63","msg":"warn","-":""}
+{"level":"INFO","time":"2022-12-24T16:34:25.743+0900","caller":"logger/logger.go:57","msg":"info","-":""}
+{"level":"INFO","time":"2022-12-24T16:34:25.743+0900","caller":"logger/logger.go:57","msg":"info","-":""}
+{"level":"ERROR","time":"2022-12-24T16:34:25.743+0900","caller":"logger/logger.go:69","msg":"error","-":""}
+{"level":"DEBUG","time":"2022-12-24T16:34:28.562+0900","caller":"logger/logger.go:51","msg":"debug","-":"ready server.... "}
+{"level":"INFO","time":"2022-12-24T16:34:35.350+0900","caller":"logger/logger.go:102","msg":"/pizza/order","status":200,"method":"POST","path":"/pizza/order","query":"","ip":"::1","user-agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36","errors":"","cost":0.000331177}
+{"level":"WARN","time":"2022-12-24T16:36:31.831+0900","caller":"logger/logger.go:63","msg":"warn","-":""}
+{"level":"INFO","time":"2022-12-24T16:36:36.832+0900","caller":"logger/logger.go:57","msg":"info","-":""}
+{"level":"INFO","time":"2022-12-24T16:36:36.832+0900","caller":"logger/logger.go:57","msg":"info","-":""}
+{"level":"ERROR","time":"2022-12-24T16:36:36.832+0900","caller":"logger/logger.go:69","msg":"error","-":""}
+{"level":"DEBUG","time":"2022-12-24T16:36:39.474+0900","caller":"logger/logger.go:51","msg":"debug","-":"ready server.... "}
+{"level":"INFO","time":"2022-12-24T16:36:41.515+0900","caller":"logger/logger.go:102","msg":"/pizza/order","status":200,"method":"POST","path":"/pizza/order","query":"","ip":"::1","user-agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36","errors":"","cost":0.038717855}
+{"level":"WARN","time":"2022-12-25T17:11:21.124+0900","caller":"logger/logger.go:63","msg":"warn","-":""}
+{"level":"INFO","time":"2022-12-25T17:11:26.126+0900","caller":"logger/logger.go:57","msg":"info","-":""}
+{"level":"INFO","time":"2022-12-25T17:11:26.126+0900","caller":"logger/logger.go:57","msg":"info","-":""}
+{"level":"ERROR","time":"2022-12-25T17:11:26.126+0900","caller":"logger/logger.go:69","msg":"error","-":""}

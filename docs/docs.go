@@ -98,31 +98,152 @@ const docTemplate = `{
                 "responses": {}
             }
         },
+        "/admin/order/update": {
+            "post": {
+                "description": "피자주문정보에서 주문접수, 조리, 배달완료 등 상태를 update하는 API",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "update a status in order",
+                "parameters": [
+                    {
+                        "description": "update a status in order",
+                        "name": "OrderStatusBody",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controller.OrderStatusBody"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
         "/health": {
             "get": {
                 "description": "health check",
                 "summary": "health check",
                 "responses": {}
             }
+        },
+        "/pizza/order": {
+            "post": {
+                "description": "피자를 주문하는 API",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "order a pizza",
+                "parameters": [
+                    {
+                        "description": "PizzaOrderBody Info",
+                        "name": "PizzaOrderBody",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controller.PizzaOrderBody"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
         }
     },
     "definitions": {
         "controller.DeleteRequestBody": {
-            "type": "object"
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "controller.OrderStatusBody": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                }
+            }
+        },
+        "controller.PizzaOrderBody": {
+            "type": "object",
+            "properties": {
+                "orderInfo": {
+                    "$ref": "#/definitions/model.OrderInfo"
+                },
+                "personInfo": {
+                    "$ref": "#/definitions/model.OrderPersonInfo"
+                }
+            }
+        },
+        "model.OrderInfo": {
+            "type": "object",
+            "properties": {
+                "_id": {
+                    "type": "string"
+                },
+                "amount": {
+                    "type": "integer"
+                },
+                "pizza_id": {
+                    "type": "string"
+                },
+                "size": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.OrderPersonInfo": {
+            "type": "object",
+            "properties": {
+                "_id": {
+                    "type": "string"
+                },
+                "address": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "phone": {
+                    "type": "string"
+                },
+                "pizzaId": {
+                    "type": "string"
+                }
+            }
         },
         "model.PizzaCategory": {
             "type": "object",
             "properties": {
+                "_id": {
+                    "type": "string"
+                },
+                "deleted_At": {
+                    "type": "string"
+                },
                 "des": {
                     "type": "string"
+                },
+                "l": {
+                    "type": "integer"
                 },
                 "limit_Order": {
                     "type": "integer"
                 },
-                "lsizePrice": {
-                    "type": "integer"
-                },
-                "msizePrice": {
+                "m": {
                     "type": "integer"
                 },
                 "name": {
@@ -130,6 +251,9 @@ const docTemplate = `{
                 },
                 "order_status": {
                     "type": "boolean"
+                },
+                "updated_At": {
+                    "type": "string"
                 }
             }
         }
