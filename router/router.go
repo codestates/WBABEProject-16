@@ -3,22 +3,21 @@ package router
 import (
 	"fmt"
 
-	adminController "codestates_lecture/WBABEProject-16/admincontroller"
+	"codestates_lecture/WBABEProject-16/admincontroller"
 	"codestates_lecture/WBABEProject-16/docs"
 	"codestates_lecture/WBABEProject-16/logger"
-	orderController "codestates_lecture/WBABEProject-16/ordercontroller"
+	"codestates_lecture/WBABEProject-16/ordercontroller"
 
 	"github.com/gin-gonic/gin"
 	swgFiles "github.com/swaggo/files"
 	ginSwg "github.com/swaggo/gin-swagger"
 )
 
-
 type Router struct {
-	adminController *adminController.Controller
-	orderController *orderController.Controller
+	adminController *admincontroller.Controller
+	orderController *ordercontroller.Controller
 }
-func NewRouter(adminCtl *adminController.Controller,orderCtl *orderController.Controller) (*Router, error){
+func NewRouter(adminCtl *admincontroller.Controller,orderCtl *ordercontroller.Controller) (*Router, error){
 	r := &Router{adminController: adminCtl, orderController: orderCtl}
 	return r, nil
 }
@@ -69,6 +68,8 @@ func (r *Router)Idx() *gin.Engine {
 	order := server.Group("pizza")
 	{
 	   order.POST("/order", r.orderController.OrderPizza)
+	   order.GET("/order/id/:id",r.orderController.GetOrderInfoById)
+	   order.GET("/order/:name/:phone",r.orderController.FindOrderByNameAndPhone)
 	}
 	return server
  }

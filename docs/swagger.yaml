@@ -1,48 +1,20 @@
 definitions:
-  controller.DeleteRequestBody:
+  admincontroller.DeleteRequestBody:
     properties:
-      name:
+      pizzaId:
         type: string
+    required:
+    - pizzaId
     type: object
-  controller.OrderStatusBody:
+  admincontroller.OrderStatusBody:
     properties:
       id:
         type: string
       status:
         type: string
-    type: object
-  controller.PizzaOrderBody:
-    properties:
-      orderInfo:
-        $ref: '#/definitions/model.OrderInfo'
-      personInfo:
-        $ref: '#/definitions/model.OrderPersonInfo'
-    type: object
-  model.OrderInfo:
-    properties:
-      _id:
-        type: string
-      amount:
-        type: integer
-      pizza_id:
-        type: string
-      size:
-        type: string
-      status:
-        type: string
-    type: object
-  model.OrderPersonInfo:
-    properties:
-      _id:
-        type: string
-      address:
-        type: string
-      name:
-        type: string
-      phone:
-        type: string
-      pizzaId:
-        type: string
+    required:
+    - id
+    - status
     type: object
   model.PizzaCategory:
     properties:
@@ -65,6 +37,59 @@ definitions:
       updated_At:
         type: string
     type: object
+  structs.RequestOrderInfo:
+    properties:
+      amount:
+        type: integer
+      personId:
+        type: string
+      pizzaId:
+        type: string
+      size:
+        type: string
+      status:
+        type: string
+    type: object
+  structs.RequestOrderPersonInfo:
+    properties:
+      address:
+        type: string
+      name:
+        type: string
+      phone:
+        type: string
+      pizzaId:
+        type: string
+    type: object
+  structs.RequestPizzaCategoryBody:
+    properties:
+      des:
+        type: string
+      l:
+        type: integer
+      limit_Order:
+        type: integer
+      m:
+        type: integer
+      name:
+        type: string
+      order_status:
+        type: boolean
+    required:
+    - des
+    - l
+    - limit_Order
+    - m
+    - name
+    - order_status
+    type: object
+  structs.RequestPizzaOrderBody:
+    properties:
+      orderInfo:
+        $ref: '#/definitions/structs.RequestOrderInfo'
+      personInfo:
+        $ref: '#/definitions/structs.RequestOrderPersonInfo'
+    type: object
 info:
   contact: {}
 paths:
@@ -79,7 +104,7 @@ paths:
         name: DeleteRequestBody
         required: true
         schema:
-          $ref: '#/definitions/controller.DeleteRequestBody'
+          $ref: '#/definitions/admincontroller.DeleteRequestBody'
       produces:
       - application/json
       responses: {}
@@ -91,10 +116,10 @@ paths:
       parameters:
       - description: PizzaCategory Info
         in: body
-        name: model.PizzaCategory
+        name: structs.RequestPizzaCategoryBody
         required: true
         schema:
-          $ref: '#/definitions/model.PizzaCategory'
+          $ref: '#/definitions/structs.RequestPizzaCategoryBody'
       produces:
       - application/json
       responses:
@@ -110,10 +135,10 @@ paths:
       parameters:
       - description: PizzaCategory Info
         in: body
-        name: model.PizzaCategory
+        name: structs.RequestPizzaCategoryBody
         required: true
         schema:
-          $ref: '#/definitions/model.PizzaCategory'
+          $ref: '#/definitions/structs.RequestPizzaCategoryBody'
       produces:
       - application/json
       responses:
@@ -133,7 +158,7 @@ paths:
         name: OrderStatusBody
         required: true
         schema:
-          $ref: '#/definitions/controller.OrderStatusBody'
+          $ref: '#/definitions/admincontroller.OrderStatusBody'
       produces:
       - application/json
       responses: {}
@@ -149,14 +174,49 @@ paths:
       - application/json
       description: 피자를 주문하는 API
       parameters:
-      - description: PizzaOrderBody Info
+      - description: RequestPizzaOrderBody Info
         in: body
-        name: PizzaOrderBody
+        name: structs.RequestPizzaOrderBody
         required: true
         schema:
-          $ref: '#/definitions/controller.PizzaOrderBody'
+          $ref: '#/definitions/structs.RequestPizzaOrderBody'
       produces:
       - application/json
       responses: {}
       summary: order a pizza
+  /pizza/order/{name}/{phone}:
+    get:
+      consumes:
+      - application/json
+      description: 이름과 전화번호를 통해서 주문내역을 확인할 수 있는 API
+      parameters:
+      - description: user name
+        in: path
+        name: name
+        required: true
+        type: string
+      - description: user phone
+        in: path
+        name: phone
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses: {}
+      summary: 이름과 전화번호를 통해서 주문내역을 확인할 수 있는 API
+  /pizza/order/id/{id}:
+    get:
+      consumes:
+      - application/json
+      description: 주문번호를 통해서 주문정보를 받아볼 수 있는 API
+      parameters:
+      - description: order id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses: {}
+      summary: 주문번호를 통해서 주문정보를 받아볼 수 있는 API
 swagger: "2.0"

@@ -29,11 +29,11 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "description": "PizzaCategory Info",
-                        "name": "model.PizzaCategory",
+                        "name": "structs.RequestPizzaCategoryBody",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/model.PizzaCategory"
+                            "$ref": "#/definitions/structs.RequestPizzaCategoryBody"
                         }
                     }
                 ],
@@ -58,11 +58,11 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "description": "PizzaCategory Info",
-                        "name": "model.PizzaCategory",
+                        "name": "structs.RequestPizzaCategoryBody",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/model.PizzaCategory"
+                            "$ref": "#/definitions/structs.RequestPizzaCategoryBody"
                         }
                     }
                 ],
@@ -91,7 +91,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/controller.DeleteRequestBody"
+                            "$ref": "#/definitions/admincontroller.DeleteRequestBody"
                         }
                     }
                 ],
@@ -115,7 +115,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/controller.OrderStatusBody"
+                            "$ref": "#/definitions/admincontroller.OrderStatusBody"
                         }
                     }
                 ],
@@ -141,13 +141,64 @@ const docTemplate = `{
                 "summary": "order a pizza",
                 "parameters": [
                     {
-                        "description": "PizzaOrderBody Info",
-                        "name": "PizzaOrderBody",
+                        "description": "RequestPizzaOrderBody Info",
+                        "name": "structs.RequestPizzaOrderBody",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/controller.PizzaOrderBody"
+                            "$ref": "#/definitions/structs.RequestPizzaOrderBody"
                         }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/pizza/order/id/{id}": {
+            "get": {
+                "description": "주문번호를 통해서 주문정보를 받아볼 수 있는 API",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "주문번호를 통해서 주문정보를 받아볼 수 있는 API",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "order id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/pizza/order/{name}/{phone}": {
+            "get": {
+                "description": "이름과 전화번호를 통해서 주문내역을 확인할 수 있는 API",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "이름과 전화번호를 통해서 주문내역을 확인할 수 있는 API",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user name",
+                        "name": "name",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "user phone",
+                        "name": "phone",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {}
@@ -155,72 +206,28 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "controller.DeleteRequestBody": {
+        "admincontroller.DeleteRequestBody": {
             "type": "object",
+            "required": [
+                "pizzaId"
+            ],
             "properties": {
-                "name": {
+                "pizzaId": {
                     "type": "string"
                 }
             }
         },
-        "controller.OrderStatusBody": {
+        "admincontroller.OrderStatusBody": {
             "type": "object",
+            "required": [
+                "id",
+                "status"
+            ],
             "properties": {
                 "id": {
                     "type": "string"
                 },
                 "status": {
-                    "type": "string"
-                }
-            }
-        },
-        "controller.PizzaOrderBody": {
-            "type": "object",
-            "properties": {
-                "orderInfo": {
-                    "$ref": "#/definitions/model.OrderInfo"
-                },
-                "personInfo": {
-                    "$ref": "#/definitions/model.OrderPersonInfo"
-                }
-            }
-        },
-        "model.OrderInfo": {
-            "type": "object",
-            "properties": {
-                "_id": {
-                    "type": "string"
-                },
-                "amount": {
-                    "type": "integer"
-                },
-                "pizza_id": {
-                    "type": "string"
-                },
-                "size": {
-                    "type": "string"
-                },
-                "status": {
-                    "type": "string"
-                }
-            }
-        },
-        "model.OrderPersonInfo": {
-            "type": "object",
-            "properties": {
-                "_id": {
-                    "type": "string"
-                },
-                "address": {
-                    "type": "string"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "phone": {
-                    "type": "string"
-                },
-                "pizzaId": {
                     "type": "string"
                 }
             }
@@ -254,6 +261,85 @@ const docTemplate = `{
                 },
                 "updated_At": {
                     "type": "string"
+                }
+            }
+        },
+        "structs.RequestOrderInfo": {
+            "type": "object",
+            "properties": {
+                "amount": {
+                    "type": "integer"
+                },
+                "personId": {
+                    "type": "string"
+                },
+                "pizzaId": {
+                    "type": "string"
+                },
+                "size": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                }
+            }
+        },
+        "structs.RequestOrderPersonInfo": {
+            "type": "object",
+            "properties": {
+                "address": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "phone": {
+                    "type": "string"
+                },
+                "pizzaId": {
+                    "type": "string"
+                }
+            }
+        },
+        "structs.RequestPizzaCategoryBody": {
+            "type": "object",
+            "required": [
+                "des",
+                "l",
+                "limit_Order",
+                "m",
+                "name",
+                "order_status"
+            ],
+            "properties": {
+                "des": {
+                    "type": "string"
+                },
+                "l": {
+                    "type": "integer"
+                },
+                "limit_Order": {
+                    "type": "integer"
+                },
+                "m": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "order_status": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "structs.RequestPizzaOrderBody": {
+            "type": "object",
+            "properties": {
+                "orderInfo": {
+                    "$ref": "#/definitions/structs.RequestOrderInfo"
+                },
+                "personInfo": {
+                    "$ref": "#/definitions/structs.RequestOrderPersonInfo"
                 }
             }
         }

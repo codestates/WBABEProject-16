@@ -1,7 +1,8 @@
-package controller
+package admincontroller
 
 import (
 	"codestates_lecture/WBABEProject-16/model"
+	"codestates_lecture/WBABEProject-16/structs"
 	"errors"
 	"fmt"
 	"net/http"
@@ -14,12 +15,12 @@ type Controller struct {
 	mongoDb *model.Model
 }
 type DeleteRequestBody struct{
-	Name string `json:name "binding":"required"`
+	PizzaId string `binding:"required"`
 }
 
 type OrderStatusBody struct {
-	Id string `json:"id" bson: "_id"`
-	Status string `json:"status"`
+	Id string `binding:"required"`
+	Status string `binding:"required"`
 }
 
 func NewController(mongo *model.Model) (*Controller, error){
@@ -34,17 +35,17 @@ func NewController(mongo *model.Model) (*Controller, error){
 // @Description 피자종류를 추가하는 api
 // @Accept  json
 // @Produce  json
-// @Param model.PizzaCategory body model.PizzaCategory true "PizzaCategory Info"
+// @Param   structs.RequestPizzaCategoryBody body  structs.RequestPizzaCategoryBody true "PizzaCategory Info"
 // @Router /admin/category [post]s
 // @Success 200 {object} model.PizzaCategory
 func (ctl *Controller) AddCategory(c *gin.Context){
-   var requestBody model.PizzaCategory
+   var requestBody structs.RequestPizzaCategoryBody
    if err := c.ShouldBind(&requestBody); err != nil {
-	   fmt.Println(err)
+	   fmt.Println(err,"err")
 	   c.JSON(http.StatusBadRequest, gin.H{"result":false})
 	   return
    }
-   result, err := ctl.mongoDb.AddCategory(requestBody)
+  result, err := ctl.mongoDb.AddCategory(requestBody)
    if err != nil {
 	c.JSON(http.StatusOK, gin.H{"result":result})
 	return
@@ -60,11 +61,11 @@ func (ctl *Controller) AddCategory(c *gin.Context){
 // @Description 피자정보를 update하는 api
 // @Accept  json
 // @Produce  json
-// @Param model.PizzaCategory body model.PizzaCategory true "PizzaCategory Info"
+// @Param  structs.RequestPizzaCategoryBody body structs.RequestPizzaCategoryBody true "PizzaCategory Info"
 // @Router /admin/category [put]s
 // @Success 200 {object} model.PizzaCategory
 func (ctl *Controller) UpdateCategory(c *gin.Context){
-	var requestBody model.PizzaCategory
+	var requestBody  structs.RequestPizzaCategoryBody
 	if err := c.ShouldBind(&requestBody); err != nil {
 		fmt.Println(err)
 		c.JSON(http.StatusBadRequest, gin.H{"result":false})
@@ -95,8 +96,7 @@ func (ctl *Controller) DeleteCategory(c *gin.Context){
 		c.JSON(http.StatusBadRequest, gin.H{"result":false})
 		return
 	}
-	fmt.Print(requestBody)
-	result, err := ctl.mongoDb.DeleteByName(requestBody.Name)
+	result, err := ctl.mongoDb.DeleteByName(requestBody.PizzaId)
 	if err != nil{
 		c.JSON(http.StatusBadRequest, gin.H{"result":errors.New("error")})
 		return

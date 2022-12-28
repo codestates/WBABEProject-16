@@ -1,7 +1,7 @@
 package main
 
 import (
-	adminCtl "codestates_lecture/WBABEProject-16/admincontroller"
+	"codestates_lecture/WBABEProject-16/admincontroller"
 	conf "codestates_lecture/WBABEProject-16/config"
 	"codestates_lecture/WBABEProject-16/logger"
 	"codestates_lecture/WBABEProject-16/model"
@@ -40,11 +40,11 @@ func main() {
 
 	if mod, err := model.NewModel(); err != nil {
 		errors.New("model Error")
-	} else if  admincontroller, err := adminCtl.NewController(mod); err != nil {
+	} else if  adminCtl, err := admincontroller.NewController(mod); err != nil {
 		errors.New("controller Error")
-	}else if  ordercontroller, err := orderCtl.NewController(mod); err != nil {
+	}else if  orderController, err := orderCtl.NewController(mod); err != nil {
 		errors.New("controller Error")
-	}else if rt, err := rt.NewRouter(admincontroller,ordercontroller); err != nil {
+	}else if rt, err := rt.NewRouter(adminCtl,orderController); err != nil {
 		errors.New("router error")
 	}else {
 		mapi := &http.Server{

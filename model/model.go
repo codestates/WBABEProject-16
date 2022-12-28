@@ -1,6 +1,7 @@
 package model
 
 import (
+	"codestates_lecture/WBABEProject-16/structs"
 	"context"
 	"errors"
 	"fmt"
@@ -20,13 +21,13 @@ type Model struct {
 
 type OrderInfo struct {
   ID      primitive.ObjectID  `json:"_id" bson:"_id,omitempty"`
-  PizzaId string `json:"pizza_id"`
+  PizzaId  primitive.ObjectID  `json:"pizza_id" bson:"pizza_id,omitempty"`
   Size string `json:"size"`
   Amount int `json:"amount"`
-  personId string `json:"person_id"`
+  PersonId  primitive.ObjectID  `json:"person_id" bson:"person_id,omitempty"`
   Status string `json:"status"`
-  created_at time.Time `json:"created_at"`
-  updated_at time.Time `json:"updated_at"`
+  Created_at time.Time `json:"created_at"`
+  Updated_at time.Time `json:"updated_at"`
 }
 
 type OrderPersonInfo struct {
@@ -34,8 +35,9 @@ type OrderPersonInfo struct {
 	Name string `json:"name"`
 	Phone string `json:"phone"`
 	Address string `json:"address"`
-	PizzaId string `json:"pizza_id:`
-	createdAt time.Time `json:"created_at"`
+	PizzaId primitive.ObjectID  `json:"pizza_id" bson:"pizza_id,omitempty"`
+	CreatedAt time.Time `json:"created_at"`
+	Order_info []OrderInfo 
 }
 type PizzaCategory struct {
 	ID      primitive.ObjectID  `json:"_id" bson:"_id,omitempty"`
@@ -69,7 +71,7 @@ func NewModel() (*Model, error){
 }
 
 
-func (m *Model) AddCategory(category PizzaCategory) (bool,error) {
+func (m *Model) AddCategory(category structs.RequestPizzaCategoryBody) (bool,error) {
 
 	_, findErr := m.findByName(category.Name)
 	if findErr == nil {
@@ -79,8 +81,8 @@ func (m *Model) AddCategory(category PizzaCategory) (bool,error) {
 	doc := bson.M{
 		"name":category.Name,
 		"des":category.Des,
-		"msizeprice":category.M,
-		"lsizeprice":category.L,
+		"m":category.M,
+		"l":category.L,
 		"order_status":category.Order_status,
 		"limit_order": category.Limit_Order,
 		"updated_at" : time.Now(),
@@ -96,7 +98,7 @@ var stringObjectId string = result.InsertedID.(primitive.ObjectID).String()
 }
 
 
-func (m *Model) UpdateCategory(category PizzaCategory) (bool,error) {
+func (m *Model) UpdateCategory(category structs.RequestPizzaCategoryBody) (bool,error) {
 	
 	_, findErr := m.findByName(category.Name)
 	if findErr != nil {
@@ -107,8 +109,8 @@ func (m *Model) UpdateCategory(category PizzaCategory) (bool,error) {
 	update := bson.M{
 		"$set": bson.M{
 		"des":category.Des,
-		"msizeprice":category.M,
-		"lsizeprice":category.L,
+		"m":category.M,
+		"l":category.L,
 		"order_status":category.Order_status,
 		"limit_order": category.Limit_Order,
 		"updated_at" : time.Now(),
@@ -127,20 +129,19 @@ func (m *Model) UpdateCategory(category PizzaCategory) (bool,error) {
 }
 
 
-func (m *Model) DeleteByName(name string) (bool, error){
-	findResult, findErr := m.findByName(name)
+func (m *Model) DeleteByName(id string) (bool, error){
+
+	pizzaId, err := primitive.ObjectIDFromHex(id)
+		if err != nil {
+		  panic(err)
+		}
+	_, findErr := m.findCategoryById(pizzaId)
 	if findErr != nil {
 		return false, errors.New("error")
 	}
-	filter := bson.M{"name":name}
+	filter := bson.M{"_id":pizzaId}
 	update := bson.M{
 		"$set": bson.M{
-		"des":findResult.Des,
-		"msizeprice":findResult.M,
-		"lsizeprice":findResult.L,
-		"order_status":findResult.Order_status,
-		"limit_order": findResult.Limit_Order,
-		"updated_at" : findResult.Updated_At,
 		"deleted_at" : time.Now(),
 		},
 	}
@@ -159,25 +160,8 @@ func (m *Model) getCategory() {
 	
 }
 
-func (m *Model) OrderPizza(orderInfo OrderInfo,orderPersonInfo OrderPersonInfo) (string, error) {
-	type OrderInfo struct {
-		PizzaId primitive.ObjectID `json:"pizza_id"`
-		Size string `json:"size"`
-		Amount int `json:"amount"`
-		personId primitive.ObjectID `json:"person_id"`
-		Status string `json:"status"`
-		created_at time.Time `json:"created_at"`
-		updated_at time.Time `json:"updated_at"`
-	  }
-	  
-	  type OrderPersonInfo struct {
-		  Name string `json:"name"`
-		  Phone string `json:"phone"`
-		  Address string `json:"address"`
-		  PizzaId primitive.ObjectID `json:"pizza_id:`
-		  createdAt time.Time `json:"created_at"`
-	  }
-
+func (m *Model) OrderPizza(orderInfo structs.RequestOrderInfo,orderPersonInfo structs.RequestOrderPersonInfo ) (string, error) {
+  fmt.Println(orderInfo, "==== ", orderPersonInfo)
 	  pizzaId, err := primitive.ObjectIDFromHex(orderInfo.PizzaId)
 		if err != nil {
 		  panic(err)
@@ -215,18 +199,15 @@ func (m *Model) OrderPizza(orderInfo OrderInfo,orderPersonInfo OrderPersonInfo) 
 }
 
 func(m *Model) UpdateOrderStatus(objId string, orderStatus string)(int64,error){
-	orderId, err := primitive.ObjectIDFromHex(objId)
-		if err != nil {
-		  panic(err)
-		  return 0, errors.New("nil이아님")
-		}
 
-	_, findErr := m.findOrderById(orderId)	
+
+	findResult, findErr := m.FindOrderById(objId)	
 	if findErr != nil {
 		return 0, errors.New("orderId not found")
 	}
-	filter := bson.M{"_id":orderId}
-	update := bson.M{"$set": bson.M{"order_status":orderStatus}}
+	fmt.Println(findResult)
+	filter := bson.M{"_id":findResult.ID}
+	update := bson.M{"$set": bson.M{"status":orderStatus}}
 	result, err := m.colOrderInfo.UpdateOne(context.TODO(),filter,update)
 	  if err != nil {
 		  return 0, errors.New("nil이아님")
@@ -264,8 +245,14 @@ func (m *Model) findCategoryById(id primitive.ObjectID)(PizzaCategory,error){
 	return result, nil
 }
 
-func (m *Model) findOrderById(id primitive.ObjectID)(OrderInfo,error){
-	filter := bson.M{"_id":id}
+func (m *Model) FindOrderById(id string)(OrderInfo,error){
+
+	orderId, orderIdErr := primitive.ObjectIDFromHex(id)
+	if orderIdErr != nil {
+	  panic(orderIdErr)
+	}
+	
+	filter := bson.M{"_id":orderId}
 	var result OrderInfo
 	err := m.colOrderInfo.FindOne(context.TODO(), filter).Decode(&result)
 	if err == mongo.ErrNoDocuments {
@@ -275,6 +262,30 @@ func (m *Model) findOrderById(id primitive.ObjectID)(OrderInfo,error){
 		panic(err)
 	}	
 	return result, nil
+}
+
+func (m *Model) FindOrderByNameAndPhone(name string, phone string) []OrderPersonInfo{
+	matchStage := bson.D{{Key:"$match", Value:bson.D{{Key: "name", Value: name},{"phone",phone}}}}
+	lookupStage := bson.D{
+        {Key: "$lookup", Value: bson.D{
+            {Key: "from", Value: "order_order"},
+            {Key: "localField", Value: "_id"},
+            {Key: "foreignField", Value: "person_id"},
+            {Key: "as", Value: "order_info"},
+        }},
+    }
+	showLoadedCursor, err := m.colPersonInfo.Aggregate(context.TODO(), mongo.Pipeline{lookupStage,matchStage})
+	if err != nil {
+		fmt.Println(err)
+		panic(err)
+	}
+	var showsLoaded []OrderPersonInfo
+	if err = showLoadedCursor.All(context.TODO(), &showsLoaded); err != nil {
+		fmt.Println(err)
+		panic(err)
+	}
+	fmt.Println(showsLoaded)
+   return showsLoaded
 }
 
 
