@@ -101,6 +101,9 @@ func (ctl *Controller) DeleteCategory(c *gin.Context){
 		c.JSON(http.StatusBadRequest, gin.H{"result":errors.New("error")})
 		return
 	}
+	/*
+	일반적으로 삭제가 되는 경우에는 204 No Content를 리턴합니다.
+	*/
 	c.JSON(http.StatusOK, gin.H{"result":result})
  }
  
