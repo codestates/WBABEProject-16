@@ -27,7 +27,11 @@ func NewController(mongo *model.Model) (*Controller, error){
 }
 
 
-
+/*
+피자라는 API를 따로 구현하기 보다는
+api/v1/orders POST 의 방식을 이용해 orders라는 곳에서 한번에 처리할 수 있을 것 같습니다.
+주문에 대한 메뉴로서 피자가 들어가게 되구요.
+*/
 // Post
 // @Summary order a pizza 
 // @Description 피자를 주문하는 API
@@ -46,6 +50,9 @@ func (ctl *Controller) OrderPizza(c *gin.Context){
 	if resultErr != nil {
           c.JSON(http.StatusBadRequest, gin.H{"result":result})
 	}
+	/*
+	리소스가 올바르게 생성되면 일반적으로는 201 created를 return 합니다.
+	*/
 	c.JSON(http.StatusOK, gin.H{"order_id":result})
 	
 }
@@ -68,7 +75,11 @@ func (ctl *Controller) GetOrderInfoById(c *gin.Context){
 	c.JSON(http.StatusOK, gin.H{"data":result})
 }
 
-
+/*
+이름과 전화번호를 통해서 주문을 가져오기 보다는, 
+Order의 unique한 OrderId와 같은 값을 이용해서 해당 order를 가져오고, 그에 대한 정보를 가져오는 방식이 일반적입니다.
+지금처럼 구성한다면, 필드가 늘어날 때마다 관련된 정보를 통해서 가져올 수 있는 API를 계속 생성해야 할 것입니다.
+*/
 // Get
 // @Summary 이름과 전화번호를 통해서 주문내역을 확인할 수 있는 API
 // @Description 이름과 전화번호를 통해서 주문내역을 확인할 수 있는 API

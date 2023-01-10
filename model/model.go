@@ -30,6 +30,11 @@ type OrderInfo struct {
   Updated_at time.Time `json:"updated_at"`
 }
 
+/*
+OrderPerson 보다는 User라는 네이밍은 어떠할까요?
+User로서 유저에 대한 정보를 담고, 어떤 주문을 했는지에 대한 것은 OrderID로서 연결지을 수 있겠습니다.
+또한, 판매자인지 구매자인지에 대해서 나누는 필드가 들어가면 더욱 좋을 것 같습니다.
+*/
 type OrderPersonInfo struct {
 	ID      primitive.ObjectID  `json:"_id" bson:"_id,omitempty"`
 	Name string `json:"name"`
@@ -128,7 +133,9 @@ func (m *Model) UpdateCategory(category structs.RequestPizzaCategoryBody) (bool,
 	return false,errors.New("error")
 }
 
-
+/*
+함수의 네이밍과는 다르게 실제로는 Id를 통해서 삭제처리를 하는 것 같습니다.
+*/
 func (m *Model) DeleteByName(id string) (bool, error){
 
 	pizzaId, err := primitive.ObjectIDFromHex(id)
